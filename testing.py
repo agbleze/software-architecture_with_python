@@ -14,3 +14,13 @@ def get_url_data_stub(url):
     filename = hashlib.md5(url).hexdigest()
     if os.path.isfile(filename):
         return open(filename).read()
+    
+## combine both the orginal request and file cache
+def get_url_data(url):
+    filename = hashlib.md5(url).hexdigest()
+    if os.path.isfile(filename):
+        return open(filename).read()
+    
+    data = requests.get(url).content
+    open(filename, "w").write(data)
+    return data
